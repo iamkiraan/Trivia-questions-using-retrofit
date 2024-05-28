@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background">#242A40</color>
+    <color name="resultButton">#CCDAE7</color>
+    <color name="top">#2E425A</color>
+    <color name="rectangle">#252C3F</color>
 </resources>

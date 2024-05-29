@@ -1,10 +1,15 @@
 package com.example.footballfixture
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,13 +27,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tv3: TextView
     private lateinit var tv4: TextView
     private lateinit var next: Button
-    private lateinit var exit: Button
     private lateinit var tv5: TextView
     private lateinit var tv6: TextView
     private lateinit var tv7: TextView
     private lateinit var TitlE: TextView
-    private lateinit var Timer : TextView
-    private var i = 0
+    private lateinit var Timer: TextView
     private var Correct = 0
     private var Incorrect = 0
     private var countDownTimer: CountDownTimer? = null
@@ -42,13 +45,9 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         initializeViews()
         loadQuestion()
-
-        next.setOnClickListener {
-            loadQuestion()
-        }
-
     }
 
     private fun initializeViews() {
@@ -64,8 +63,13 @@ class MainActivity : AppCompatActivity() {
         Timer = findViewById(R.id.timer)
     }
 
+
+
     private fun loadQuestion() {
+
+
         cancelTimer()
+
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl("https://opentdb.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -80,9 +84,12 @@ class MainActivity : AppCompatActivity() {
 
                 if (results.isNotEmpty()) {
                     val question = results[0]
+
+                    // Set the question text and category
                     ques.text = question.question
                     TitlE.text = question.category
 
+                    // Shuffle incorrect and correct answers
                     val answers = mutableListOf(
                         question.correct_answer,
                         question.incorrect_answers[0],
@@ -95,17 +102,22 @@ class MainActivity : AppCompatActivity() {
                     tv4.text = answers[2]
                     tv5.text = answers[3]
 
+                    // Reset text colors
                     tv2.setTextColor(Color.BLACK)
                     tv3.setTextColor(Color.BLACK)
                     tv4.setTextColor(Color.BLACK)
                     tv5.setTextColor(Color.BLACK)
 
+                    // Set click listeners for answers
                     tv2.setOnClickListener { handleAnswerClick(tv2, question.correct_answer) }
                     tv3.setOnClickListener { handleAnswerClick(tv3, question.correct_answer) }
                     tv4.setOnClickListener { handleAnswerClick(tv4, question.correct_answer) }
                     tv5.setOnClickListener { handleAnswerClick(tv5, question.correct_answer) }
 
+                    // Start the timer
                     startTimer()
+                } else {
+                    Log.e("Quiz", "No questions found in the response")
                 }
             }
 
@@ -120,22 +132,31 @@ class MainActivity : AppCompatActivity() {
         if (textView.text == correctAnswer) {
             textView.setTextColor(Color.GREEN)
             Correct++
-            tv6.text = Correct.toString()
         } else {
             textView.setTextColor(Color.RED)
             Incorrect++
-            tv7.text = Incorrect.toString()
         }
+
+
+
+        // Load the next question
+        loadQuestion()
     }
 
     private fun startTimer() {
         countDownTimer = object : CountDownTimer(15000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                Timer.text = "Timer remaining: " + millisUntilFinished / 1000
-                Timer.setTextColor(Color.RED)
+                Timer.text = "Timer remaining: ${millisUntilFinished / 1000}"
+                if (millisUntilFinished <= 5000) {
+                    Timer.setTextColor(Color.RED)
+                } else {
+                    Timer.setTextColor(Color.GREEN)
+                }
+
             }
 
             override fun onFinish() {
+                // On timer finish, proceed to next question
                 loadQuestion()
             }
         }.start()
@@ -144,4 +165,7 @@ class MainActivity : AppCompatActivity() {
     private fun cancelTimer() {
         countDownTimer?.cancel()
     }
+
+
+
 }

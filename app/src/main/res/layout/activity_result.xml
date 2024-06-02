@@ -13,7 +13,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:id="@+id/constraint"
     android:layout_marginTop="160dp">
+
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/shapeableImageView2"
@@ -25,6 +27,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="@+id/shapeableImageView2"
+        app:layout_constraintStart_toStartOf="@+id/shapeableImageView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -32,8 +43,10 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/shapeableImageView2"
-        app:layout_constraintTop_toTopOf="@+id/shapeableImageView2" />
+        app:layout_constraintTop_toTopOf="@+id/shapeableImageView2"
+        app:layout_constraintVertical_bias="0.689" />
 
     <TextView
         android:id="@+id/textView9"
@@ -45,6 +58,26 @@
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="Do you want to play again?"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:text="Play Again"
+        android:textSize="18sp"
+        android:textColor="#87CEEB"
+        android:textStyle="bold"
+        android:id="@+id/again"/>
+
 
 
 </LinearLayout>

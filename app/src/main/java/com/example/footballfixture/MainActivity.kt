@@ -1,5 +1,6 @@
 package com.example.footballfixture
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var totalQuestions = 0
     private var answeredQuestions = 0
     private lateinit var next: Button
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +46,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        sharedPrefHelper = SharedPrefHelper(this)
+
         totalQuestions = intent.getIntExtra("QUESTION_COUNT", 0)
         initializeViews()
         loadQuestion()
+
         next.setOnClickListener {
             loadQuestion()
         }
@@ -67,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadQuestion() {
         if (answeredQuestions == totalQuestions) {
+            saveCurrentResults()
             navigateNext()
             return
         }
@@ -161,6 +167,11 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("Incorrect", Incorrect)
         intent.putExtra("Correct", Correct)
         startActivity(intent)
-        finish() // Optionally call finish() to close the current activity
+        finish()
+    }
+
+    private fun saveCurrentResults() {
+        val record = QuizRecord(correct = Correct, incorrect = Incorrect, timestamp = System.currentTimeMillis())
+        sharedPrefHelper.saveRecord(record)
     }
 }

@@ -9,6 +9,7 @@
     android:background="@color/background"
     android:orientation="vertical">
 
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -77,6 +78,16 @@
         android:textColor="#87CEEB"
         android:textStyle="bold"
         android:id="@+id/again"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History"
+        android:textStyle="bold"
+        android:textColor="#87CEEB"
+        android:textSize="18sp"
+        android:id="@+id/history"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"/>
 
 
 

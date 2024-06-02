@@ -71,7 +71,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:clickable="true"/>
+        android:clickable="true"
+        />
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"

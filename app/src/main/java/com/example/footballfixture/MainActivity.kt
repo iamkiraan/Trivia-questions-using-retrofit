@@ -134,6 +134,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleAnswerClick(selectedTextView: TextView, correctAnswer: String) {
         cancelTimer()
+        selectedTextView.isClickable =true
         if (selectedTextView.text == correctAnswer) {
             selectedTextView.setTextColor(Color.GREEN)
             Correct++
